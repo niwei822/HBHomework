@@ -41,8 +41,12 @@ def without_duplicates(words):
         >>> type(without_duplicates([111111, 2, 33333, 2]))
         <class 'list'>
     """
+    word_count = {}
+    for word in words:
+        word_count[word] = word_count.get(word, 0) + 1
+    no_duplicate = word_count.keys()
 
-    return []
+    return sorted(no_duplicate)
 
 
 def find_unique_common_items(items1, items2):
@@ -77,8 +81,9 @@ def find_unique_common_items(items1, items2):
         >>> sorted(find_unique_common_items(["2", "1", 2], [2, 1]))
         [2]
     """
+    
 
-    return set()
+    return set(items1) & set(items2)
 
 
 def get_sum_zero_pairs(numbers):
@@ -107,8 +112,14 @@ def get_sum_zero_pairs(numbers):
         >>> sort_pairs( get_sum_zero_pairs([1, 3, -1, 1, 1, 0]) )
         [[-1, 1], [0, 0]]
     """
+    new = set(numbers)
+    new = sorted(list(new))
+    sum_zero = []
+    for num in new:
+        if -num in new and num >= 0:
+            sum_zero.append([num, -num])
 
-    return []
+    return sum_zero
 
 
 def top_chars(phrase):
@@ -135,8 +146,17 @@ def top_chars(phrase):
     Do not count spaces, but count all other characters.
 
     """
+    char_count = {}
+    top_chars = []
+    phrase = phrase.lower().replace(" ", "").replace(".", "").replace(",", "")
+    for char in phrase:
+        char_count[char] = char_count.get(char, 0) + 1
+    for key in char_count.keys():
+        if char_count[key] == max(char_count.values()):
+            top_chars.append(key)
+            
 
-    return []
+    return sorted(top_chars)
 
 #####################################################################
 # You can ignore everything below this.
@@ -155,3 +175,4 @@ if __name__ == "__main__":
     if doctest.testmod().failed == 0:
         print("*** ALL TESTS PASSED ***")
     print()
+print(top_chars("Shake it off, shake it off."))
